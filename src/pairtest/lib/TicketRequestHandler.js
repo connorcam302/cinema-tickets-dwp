@@ -1,4 +1,4 @@
-import TicketPrices from './TicketPrices.js'
+import TicketTypeConfig from './TicketTypeProperties.js'
 import TicketTypeRequest from './TicketTypeRequest.js'
 
 /**
@@ -29,7 +29,7 @@ export default class TicketRequestHandler {
    * @returns {number} The total price.
    */
   static #getPrice(type, count) {
-    return count * TicketPrices.getPrice(type)
+    return count * TicketTypeConfig.getPrice(type)
   }
 
   /**

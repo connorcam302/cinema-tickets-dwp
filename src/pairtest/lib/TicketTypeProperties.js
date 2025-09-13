@@ -2,7 +2,7 @@
  * @class
  * @classdesc Manages the configuration and business logic for different ticket types.
  */
-export default class TicketTypeConfig {
+export default class TicketTypeProperties {
   /**
    * @typedef {Object} TicketType
    * @property {number} price - The price of the ticket type.

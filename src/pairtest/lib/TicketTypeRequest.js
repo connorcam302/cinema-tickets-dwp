@@ -2,7 +2,7 @@
  * Immutable Object.
  */
 
-import TicketTypeConfig from './TicketTypeProperties.js'
+import TicketTypeProperties from './TicketTypeProperties.js'
 
 export default class TicketTypeRequest {
   #type
@@ -10,7 +10,7 @@ export default class TicketTypeRequest {
   #noOfTickets
 
   constructor(type, noOfTickets) {
-    const validTypes = TicketTypeConfig.getValidTypes()
+    const validTypes = TicketTypeProperties.getValidTypes()
     if (!validTypes.includes(type)) {
       throw new TypeError(
         `type must be ${validTypes.slice(0, -1).join(', ')}, or ${validTypes.slice(-1)}`,
@@ -39,7 +39,7 @@ export default class TicketTypeRequest {
    * @returns {number} The price of a single ticket.
    */
   getPrice() {
-    return TicketTypeConfig.getPrice(this.#type)
+    return TicketTypeProperties.getPrice(this.#type)
   }
 
   /**
@@ -48,7 +48,7 @@ export default class TicketTypeRequest {
    * @returns {boolean} True if the ticket type requires a seat, false otherwise.
    */
   requiresSeat() {
-    return TicketTypeConfig.requiresSeat(this.#type)
+    return TicketTypeProperties.requiresSeat(this.#type)
   }
 
   /**
@@ -57,7 +57,7 @@ export default class TicketTypeRequest {
    * @returns {boolean} True if this ticket type can be purchased alone, false otherwise.
    */
   canPurchaseAlone() {
-    return TicketTypeConfig.canPurchaseAlone(this.#type)
+    return TicketTypeProperties.canPurchaseAlone(this.#type)
   }
 
   /**
@@ -74,6 +74,6 @@ export default class TicketTypeRequest {
    * @returns {boolean} True if the ticket holder allows someone to sit on their lap, otherwise false.
    */
   allowsLapSeating() {
-    return TicketTypeConfig.allowsLapSeating(this.#type)
+    return TicketTypeProperties.allowsLapSeating(this.#type)
   }
 }

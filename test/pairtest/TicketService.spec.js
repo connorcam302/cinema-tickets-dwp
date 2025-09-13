@@ -136,5 +136,46 @@ describe('TicketService', () => {
         InvalidPurchaseException,
       )
     })
+
+    it('should call makePayment with the correct total price', () => {
+      const ticketTypeRequests = [
+        new TicketTypeRequest('ADULT', 2), // 2 * 25 = 50
+        new TicketTypeRequest('CHILD', 1), // 1 * 15 = 15
+        new TicketTypeRequest('INFANT', 1), // 1 * 0 = 0
+      ]
+      const paymentSpy = sinon.stub(TicketPaymentService.prototype, 'makePayment').callsFake(() => {})
+      service.purchaseTickets(123, ...ticketTypeRequests)
+      expect(paymentSpy.withArgs(123, 65).calledOnce).to.be.true
+    })
+
+    it('should call reserveSeat with the correct number of seats', () => {
+      const ticketTypeRequests = [
+        new TicketTypeRequest('ADULT', 2), // 2 seats
+        new TicketTypeRequest('CHILD', 1), // 1 seat
+        new TicketTypeRequest('INFANT', 1), // 0 seats
+      ]
+      const seatSpy = sinon.stub(SeatReservationService.prototype, 'reserveSeat').callsFake(() => {})
+      service.purchaseTickets(123, ...ticketTypeRequests)
+      expect(seatSpy.withArgs(123, 3).calledOnce).to.be.true
+    })
+
+    it('should not allow more than 25 tickets to be purchased', () => {
+      const ticketTypeRequests = [new TicketTypeRequest('ADULT', 26)]
+      expect(() => service.purchaseTickets(123, ...ticketTypeRequests)).to.throw(
+        InvalidPurchaseException,
+        'Request can only consist of a maximum of 25 tickets.',
+      )
+    })
+
+    it('should return the correct total price and seat count', () => {
+      const ticketTypeRequests = [
+        new TicketTypeRequest('ADULT', 2),
+        new TicketTypeRequest('CHILD', 1),
+        new TicketTypeRequest('INFANT', 1),
+      ]
+      const result = service.purchaseTickets(123, ...ticketTypeRequests)
+      expect(result.totalPrice).to.equal(65)
+      expect(result.totalSeatCount).to.equal(3)
+    })
   })
 })

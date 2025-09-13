@@ -64,7 +64,7 @@ describe('TicketTypeProperties', () => {
       expect(TicketTypeProperties.requiresSeat('CHILD')).to.be.true
     })
 
-    it('should return false for ', () => {
+    it('should return false for infant', () => {
       expect(TicketTypeProperties.requiresSeat('INFANT')).to.be.false
     })
 

@@ -9,8 +9,6 @@ describe('TicketTypeRequest', () => {
 		describe('Invalid Request', () => {
 			it('should throw an error due to invalid type', () => {
 				expect(() => new TicketTypeRequest('INVALID TYPE', 1)).to.throw(TypeError)
-				const invalidTicketTypes = ['INVALID TYPE', 12.34, null, undefined, {}, []]
-				invalidTicketTypes.forEach((ticketType) => expect(()=> new TicketTypeRequest('ADULT', ticketType)).to.throw(TypeError))
 			})
 			it('should throw an error if ticket amount is not an integer', () => {
 				const invalidTicketAmounts = ['INVALID ACCOUNT ID', 12.34, null, undefined, {}, []]
@@ -53,7 +51,7 @@ describe('TicketTypeRequest', () => {
 				expect(tickets.getTicketType()).to.equal('INFANT')
 				expect(tickets.getNoOfTickets()).to.equal(1)
 			})
-			it('should allow the requesting of multiple child tickets', () => {
+			it('should allow the requesting of multiple infant tickets', () => {
 				const tickets = new TicketTypeRequest('INFANT', 5)
 
 				expect(tickets.getTicketType()).to.equal('INFANT')

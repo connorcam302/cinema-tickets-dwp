@@ -25,20 +25,6 @@ export default class TicketService {
   #seatReservationService = new SeatReservationService()
 
   /**
-   * @private
-   * @type {number}
-   * @description The calculated total price for the ticket purchase.
-   */
-  #totalPrice = 0
-
-  /**
-   * @private
-   * @type {number}
-   * @description The calculated total number of seats required for the ticket purchase.
-   */
-  #totalSeatCount = 0
-
-  /**
    * Should only have private methods other than the one below.
    */
 
@@ -53,27 +39,30 @@ export default class TicketService {
   purchaseTickets(accountId, ...ticketTypeRequests) {
     TicketBookingValidator.validate(accountId, ticketTypeRequests)
 
+    let totalPrice = 0
+    let totalSeatCount = 0
+
     ticketTypeRequests.forEach((request) => {
       const { price, seatCount } = TicketRequestHandler.handleRequest(request)
-      this.#totalPrice += price
-      this.#totalSeatCount += seatCount
+      totalPrice += price
+      totalSeatCount += seatCount
     })
 
-    if (this.#totalSeatCount > 0 && this.#totalPrice > 0) {
-      this.#seatReservationService.reserveSeat(accountId, this.#totalSeatCount)
-      this.#paymentService.makePayment(accountId, this.#totalPrice)
+    if (totalSeatCount > 0 && totalPrice > 0) {
+      this.#seatReservationService.reserveSeat(accountId, totalSeatCount)
+      this.#paymentService.makePayment(accountId, totalPrice)
     } else {
-      if (this.#totalSeatCount < 1) {
+      if (totalSeatCount < 1) {
         throw new InvalidPurchaseException('Total seat count must be greater than 0.')
       }
-      if (this.#totalPrice < 1) {
+      if (totalPrice < 1) {
         throw new InvalidPurchaseException('Total price must be greater than 0.')
       }
     }
 
     return {
-      totalSeatCount: this.#totalSeatCount,
-      totalPrice: this.#totalPrice,
+      totalSeatCount,
+      totalPrice,
     }
   }
 }

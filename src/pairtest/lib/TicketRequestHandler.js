@@ -16,7 +16,7 @@ export default class TicketRequestHandler {
    * @returns {number} The number of seats.
    */
   static #getSeatCount(type, count) {
-    return type === 'INFANT' ? 0 : count
+    return TicketTypeProperties.requiresSeat(type) ? count : 0
   }
 
   /**

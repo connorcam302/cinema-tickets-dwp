@@ -68,4 +68,12 @@ export default class TicketTypeRequest {
   getTotalPrice() {
     return this.getNoOfTickets() * this.getPrice()
   }
+
+  /**
+   * Checks if a ticket type can be allows for a ticket holder who does not require a seat to sit on their lap.
+   * @returns {boolean} True if the ticket holder allows someone to sit on their lap, otherwise false.
+   */
+  allowsLapSeating() {
+    return TicketTypeConfig.allowsLapSeating(this.#type)
+  }
 }

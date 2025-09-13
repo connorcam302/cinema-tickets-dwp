@@ -8,21 +8,21 @@ describe('TicketTypeConfig', () => {
       expect(TicketTypeConfig.TYPES).to.have.keys(['ADULT', 'CHILD', 'INFANT'])
     })
 
-    it('should have correct price, seat, and purchase rules for ADULT', () => {
+    it('should have correct price, seat, and purchase alone rule for adult', () => {
       const adult = TicketTypeConfig.TYPES.ADULT
       expect(adult.price).to.equal(25)
       expect(adult.requiresSeat).to.be.true
       expect(adult.canPurchaseAlone).to.be.true
     })
 
-    it('should have correct price, seat, and purchase rules for CHILD', () => {
+    it('should have correct price, seat, and purchase alone rule for child', () => {
       const child = TicketTypeConfig.TYPES.CHILD
       expect(child.price).to.equal(15)
       expect(child.requiresSeat).to.be.true
       expect(child.canPurchaseAlone).to.be.false
     })
 
-    it('should have correct price, seat, and purchase rules for INFANT', () => {
+    it('should have correct price, seat, and purchase alone rule for infant', () => {
       const infant = TicketTypeConfig.TYPES.INFANT
       expect(infant.price).to.equal(0)
       expect(infant.requiresSeat).to.be.false
@@ -38,15 +38,15 @@ describe('TicketTypeConfig', () => {
   })
 
   describe('getPrice', () => {
-    it('should return correct price for ADULT', () => {
+    it('should return correct price for adult', () => {
       expect(TicketTypeConfig.getPrice('ADULT')).to.equal(25)
     })
 
-    it('should return correct price for CHILD', () => {
+    it('should return correct price for child', () => {
       expect(TicketTypeConfig.getPrice('CHILD')).to.equal(15)
     })
 
-    it('should return correct price for INFANT', () => {
+    it('should return correct price for infant', () => {
       expect(TicketTypeConfig.getPrice('INFANT')).to.equal(0)
     })
 
@@ -56,15 +56,15 @@ describe('TicketTypeConfig', () => {
   })
 
   describe('requiresSeat', () => {
-    it('should return true for ADULT', () => {
+    it('should return true for adult', () => {
       expect(TicketTypeConfig.requiresSeat('ADULT')).to.be.true
     })
 
-    it('should return true for CHILD', () => {
+    it('should return true for child', () => {
       expect(TicketTypeConfig.requiresSeat('CHILD')).to.be.true
     })
 
-    it('should return false for INFANT', () => {
+    it('should return false for ', () => {
       expect(TicketTypeConfig.requiresSeat('INFANT')).to.be.false
     })
 
@@ -74,15 +74,15 @@ describe('TicketTypeConfig', () => {
   })
 
   describe('canPurchaseAlone', () => {
-    it('should return true for ADULT', () => {
+    it('should return true for adult', () => {
       expect(TicketTypeConfig.canPurchaseAlone('ADULT')).to.be.true
     })
 
-    it('should return false for CHILD', () => {
+    it('should return false for child', () => {
       expect(TicketTypeConfig.canPurchaseAlone('CHILD')).to.be.false
     })
 
-    it('should return false for INFANT', () => {
+    it('should return false for infant', () => {
       expect(TicketTypeConfig.canPurchaseAlone('INFANT')).to.be.false
     })
 

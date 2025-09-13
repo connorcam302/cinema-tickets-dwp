@@ -8,6 +8,7 @@ export default class TicketTypeConfig {
    * @property {number} price - The price of the ticket type.
    * @property {boolean} requiresSeat - Indicates if the ticket type requires a physical seat.
    * @property {boolean} canPurchaseAlone - Indicates if a ticket of this type can be purchased without an accompanying adult.
+   * @property {boolean} allowsLapSeating - Indicates if the host of the ticket can have someone sat on their lap.
    */
 
   /**
@@ -19,16 +20,19 @@ export default class TicketTypeConfig {
       price: 25,
       requiresSeat: true,
       canPurchaseAlone: true,
+      allowsLapSeating: true,
     },
     CHILD: {
       price: 15,
       requiresSeat: true,
       canPurchaseAlone: false,
+      allowsLapSeating: false,
     },
     INFANT: {
       price: 0,
       requiresSeat: false,
       canPurchaseAlone: false,
+      allowsLapSeating: false,
     },
   }
 
@@ -65,5 +69,14 @@ export default class TicketTypeConfig {
    */
   static canPurchaseAlone(ticketType) {
     return this.TYPES[ticketType]?.canPurchaseAlone ?? false
+  }
+
+  /**
+   * Checks if a ticket type can be allows for a ticket holder who does not require a seat to sit on their lap.
+   * @param {string} ticketType - The type of the ticket.
+   * @returns {boolean} True if the ticket holder allows someone to sit on their lap, otherwise false. Returns false by default for unknown types.
+   */
+  static allowsLapSeating(ticketType) {
+    return this.TYPES[ticketType]?.allowsLapSeating ?? false
   }
 }

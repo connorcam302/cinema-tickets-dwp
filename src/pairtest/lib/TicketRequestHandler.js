@@ -1,5 +1,6 @@
 import TicketTypeProperties from './TicketTypeProperties.js'
 import TicketTypeRequest from './TicketTypeRequest.js'
+import logger from '../utils/logger.js'
 
 /**
  * @class TicketRequestHandler
@@ -40,13 +41,20 @@ export default class TicketRequestHandler {
    * @returns {{price: number, seatCount: number}} An object containing the total price and seat count.
    */
   static handleRequest(request) {
+    logger.debug('Handling ticket request', request)
     if (!(request instanceof TicketTypeRequest)) {
+      logger.error('Invalid request type')
       throw new TypeError('Request must be of type TicketTypeRequest.')
     }
 
+    let price = this.#getPrice(request.getTicketType(), request.getNoOfTickets())
+    let seatCount = this.#getSeatCount(request.getTicketType(), request.getNoOfTickets())
+
+    logger.debug(`Ticket request handled successfully, price: ${price}, seatCount: ${seatCount}`)
+
     return {
-      price: this.#getPrice(request.getTicketType(), request.getNoOfTickets()),
-      seatCount: this.#getSeatCount(request.getTicketType(), request.getNoOfTickets()),
+      price,
+      seatCount,
     }
   }
 }

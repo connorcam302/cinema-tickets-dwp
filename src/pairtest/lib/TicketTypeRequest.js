@@ -3,6 +3,7 @@
  */
 
 import TicketTypeProperties from './TicketTypeProperties.js'
+import logger from '../utils/logger.js'
 
 export default class TicketTypeRequest {
   #type
@@ -10,19 +11,23 @@ export default class TicketTypeRequest {
   #noOfTickets
 
   constructor(type, noOfTickets) {
+    logger.debug(`Creating new TicketTypeRequest: ${type}, ${noOfTickets}`)
     const validTypes = TicketTypeProperties.getValidTypes()
     if (!validTypes.includes(type)) {
+      logger.error(`Invalid ticket type: ${type}`)
       throw new TypeError(
         `type must be ${validTypes.slice(0, -1).join(', ')}, or ${validTypes.slice(-1)}`,
       )
     }
 
     if (!Number.isInteger(noOfTickets)) {
+      logger.error(`Invalid number of tickets: ${noOfTickets}`)
       throw new TypeError('noOfTickets must be an integer')
     }
 
     this.#type = type
     this.#noOfTickets = noOfTickets
+    logger.debug('TicketTypeRequest created successfully')
   }
 
   getNoOfTickets() {

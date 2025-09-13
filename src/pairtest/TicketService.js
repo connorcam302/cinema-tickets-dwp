@@ -4,6 +4,7 @@ import TicketBookingValidator from './lib/TicketBookingValidator.js'
 import TicketPaymentService from '../thirdparty/paymentgateway/TicketPaymentService.js'
 import SeatReservationService from '../thirdparty/seatbooking/SeatReservationService.js'
 import TicketRequestHandler from './lib/TicketRequestHandler.js'
+import logger from './utils/logger.js'
 
 /**
  * @class
@@ -37,6 +38,8 @@ export default class TicketService {
    * @throws {InvalidPurchaseException | TypeError} if TicketBookingValidator.validate() conditions are not met and throws an exception for the total seat count or total price is not greater than 0.
    */
   purchaseTickets(accountId, ...ticketTypeRequests) {
+    logger.debug(`Purchasing tickets for accountId ${accountId}`)
+    logger.debug(`Tickets requested: ${ticketTypeRequests}`)
     TicketBookingValidator.validate(accountId, ticketTypeRequests)
 
     let totalPrice = 0
@@ -48,18 +51,21 @@ export default class TicketService {
       totalSeatCount += seatCount
     })
 
+    logger.debug(`Total seat count: ${totalSeatCount}, total price: ${totalPrice}`)
+
     if (totalSeatCount > 0 && totalPrice > 0) {
       this.#seatReservationService.reserveSeat(accountId, totalSeatCount)
       this.#paymentService.makePayment(accountId, totalPrice)
     } else {
       if (totalSeatCount < 1) {
+        logger.error('Total seat count must be greater than 0.')
         throw new InvalidPurchaseException('Total seat count must be greater than 0.')
       }
       if (totalPrice < 1) {
+        logger.error('Total price must be greater than 0.')
         throw new InvalidPurchaseException('Total price must be greater than 0.')
       }
     }
-
     return {
       totalSeatCount,
       totalPrice,

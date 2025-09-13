@@ -27,6 +27,8 @@ export default class TicketTypeRequest {
 
     this.#type = type
     this.#noOfTickets = noOfTickets
+
+    Object.freeze(this)
     logger.debug('TicketTypeRequest created successfully')
   }
 

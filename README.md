@@ -1,3 +1,10 @@
+# Scripts
+1. Run `npm ci` to install dependencies.
+2. Run `npm run test` to run tests.
+3. Run `npm run lint` to check for linting issues.
+4. Run `npm run lint:fix` to fix linting issues.
+5. Run `npm run format` to fix formatting issues.
+
 # Objective
 This is a coding exercise which will allow you to demonstrate how you code and your approach to a given problem. 
 You will be assessed on: 
@@ -29,7 +36,8 @@ You will be assessed on:
 - The code in the thirdparty.* packages CANNOT be modified.
 - The `TicketTypeRequest` SHOULD be an immutable object.
 
-## AssumptionsYou can assume:
+## Assumptions
+You can assume:
 - All accounts with an id greater than zero are valid. They also have sufficient funds to pay for any no of tickets.
 - The `TicketPaymentService` implementation is an external provider with no defects. You do not need to worry about how the actual payment happens.
 - The payment will always go through once a payment request has been made to the `TicketPaymentService`.
